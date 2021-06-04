@@ -18,6 +18,8 @@ router.get('/', authorized, async (req, res) => {
       [req.user]
     );
 
+    console.log(user.rows[0]);
+
     res.json(user.rows[0]);
   } catch (error) {
     console.error(error.message);
