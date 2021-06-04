@@ -21,7 +21,7 @@ router.get('/', authorized, async (req, res) => {
     res.json(user.rows[0]);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('Server error');
+    res.status(500).json('Server error');
   }
 });
 
