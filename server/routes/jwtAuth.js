@@ -24,7 +24,7 @@ router.post('/register', validInfo, async (req, res) => {
     ]);
 
     if (user.rows.length !== 0) {
-      return res.status(401).json({ message: 'User already exists!' }); // 401 unauthenticated error stat}us
+      return res.status(401).json('User already exists!'); // 401 unauthenticated error status
     }
 
     // 3. encrypt the user's password using bcrypt
@@ -44,7 +44,7 @@ router.post('/register', validInfo, async (req, res) => {
     res.json({ token });
   } catch (err) {
     console.error(err.message);
-    return res.status(500).send({ message: 'Server Error' });
+    return res.status(500).json('Server Error');
   }
 });
 
@@ -60,7 +60,7 @@ router.post('/login', validInfo, async (req, res) => {
     ]);
 
     if (user.rows.length === 0) {
-      return res.status(401).json({ message: 'Email is incorrect!' });
+      return res.status(401).json('Email is incorrect!');
     }
 
     // 3. check if incoming password is the same as the db password
@@ -70,7 +70,7 @@ router.post('/login', validInfo, async (req, res) => {
     );
 
     if (!validPassword) {
-      return res.status(401).json({ message: 'Password is incorrect!' });
+      return res.status(401).json('Password is incorrect!');
     }
 
     // 4. give them the jwt token
@@ -79,7 +79,7 @@ router.post('/login', validInfo, async (req, res) => {
     res.json({ token });
   } catch (err) {
     console.error(err.message);
-    return res.status(500).send({ message: 'Server Error' });
+    return res.status(500).json('Server Error');
   }
 });
 
@@ -88,7 +88,7 @@ router.get('/isVerified', authorized, async (req, res) => {
     res.json(true);
   } catch (err) {
     console.error(err.message);
-    return res.status(500).send({ message: 'Server Error' });
+    return res.status(500).json('Server Error');
   }
 });
 
