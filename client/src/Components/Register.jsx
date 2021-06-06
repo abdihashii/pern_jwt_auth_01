@@ -16,6 +16,10 @@ const Register = ({ setAuth }) => {
   );
   const dispatch = useDispatch();
 
+  /**
+   * On click handler that runs the register API
+   * @param {Object} e - The event target
+   */
   const onRegister = async (e) => {
     e.preventDefault();
 
