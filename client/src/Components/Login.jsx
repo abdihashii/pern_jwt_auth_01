@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // Libraries
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  changeInput,
+  resetInputs,
+} from '../slices/authentication/authenticationSlice';
 
 const Login = ({ setAuth }) => {
-  // States
-  const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
-  });
-  const { email, password } = inputs;
-
-  const onInputChange = ({ target: { name, value } }) => {
-    setInputs({ ...inputs, [name]: value });
-  };
+  // Redux
+  const loginAuthenticationInputs = useSelector(
+    (state) => state.authenticationInputs.login
+  );
+  const dispatch = useDispatch();
 
   const onLogIn = async (e) => {
     e.preventDefault();
 
     try {
-      const body = { email, password };
+      const body = {
+        email: loginAuthenticationInputs.email,
+        password: loginAuthenticationInputs.password,
+      };
 
       const response = await fetch('http://localhost:5000/auth/login', {
         method: 'POST',
@@ -37,6 +40,7 @@ const Login = ({ setAuth }) => {
         localStorage.setItem('token', json.token);
         setAuth(true);
         toast.success('Logged in successfully');
+        dispatch(resetInputs({ auth: 'login' }));
       }
     } catch (error) {
       console.error(error.message);
@@ -55,8 +59,10 @@ const Login = ({ setAuth }) => {
           type="email"
           name="email"
           id="emailInput"
-          value={email}
-          onChange={onInputChange}
+          value={loginAuthenticationInputs.email}
+          onChange={({ target: { name, value } }) =>
+            dispatch(changeInput({ auth: 'login', name, value }))
+          }
         />
 
         <label htmlFor="passwordInput">password</label>
@@ -65,16 +71,21 @@ const Login = ({ setAuth }) => {
           type="password"
           name="password"
           id="passwordInput"
-          value={password}
-          onChange={onInputChange}
+          value={loginAuthenticationInputs.password}
+          onChange={({ target: { name, value } }) =>
+            dispatch(changeInput({ auth: 'login', name, value }))
+          }
         />
 
-        <button type="submit" className="btn btn-success btn-block">
-          Log in
-        </button>
+        <div className="buttons d-flex flex-column">
+          <button type="submit" className="btn btn-success btn-block">
+            Log in
+          </button>
+          <Link className="my-3" to="/register">
+            Register
+          </Link>
+        </div>
       </form>
-
-      <Link to="/register">Register</Link>
     </>
   );
 };
