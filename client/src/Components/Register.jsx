@@ -3,24 +3,24 @@ import React, { useState } from 'react';
 // Libraries
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  changeInput,
+  resetInputs,
+} from '../slices/authentication/authenticationSlice';
 
 const Register = ({ setAuth }) => {
-  // States
-  const [inputs, setInputs] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-  const { name, email, password } = inputs;
-
-  const onInputChange = ({ target: { name, value } }) => {
-    setInputs({ ...inputs, [name]: value });
-  };
+  // Redux
+  const registerAuthenticationInputs = useSelector(
+    (state) => state.authenticationInputs.register
+  );
+  const dispatch = useDispatch();
 
   const onRegister = async (e) => {
     e.preventDefault();
 
     try {
+      const { name, email, password } = registerAuthenticationInputs;
       const body = { name, email, password };
 
       const response = await fetch('http://localhost:5000/auth/register', {
@@ -40,6 +40,7 @@ const Register = ({ setAuth }) => {
         localStorage.setItem('token', json.token);
         setAuth(true);
         toast.success('Registered successfully');
+        dispatch(resetInputs({ auth: 'register' }));
       }
     } catch (error) {
       console.error(error.message);
@@ -58,8 +59,10 @@ const Register = ({ setAuth }) => {
           type="text"
           name="name"
           id="nameInput"
-          value={name}
-          onChange={onInputChange}
+          value={registerAuthenticationInputs.name}
+          onChange={({ target: { value, name } }) =>
+            dispatch(changeInput({ auth: 'register', value, name }))
+          }
         />
 
         <label htmlFor="emailInput">Email</label>
@@ -68,8 +71,10 @@ const Register = ({ setAuth }) => {
           type="email"
           name="email"
           id="emailInput"
-          value={email}
-          onChange={onInputChange}
+          value={registerAuthenticationInputs.email}
+          onChange={({ target: { value, name } }) =>
+            dispatch(changeInput({ auth: 'register', value, name }))
+          }
         />
 
         <label htmlFor="passwordInput">password</label>
@@ -78,8 +83,10 @@ const Register = ({ setAuth }) => {
           type="password"
           name="password"
           id="passwordInput"
-          value={password}
-          onChange={onInputChange}
+          value={registerAuthenticationInputs.password}
+          onChange={({ target: { value, name } }) =>
+            dispatch(changeInput({ auth: 'register', value, name }))
+          }
         />
 
         <div className="buttons d-flex flex-column">
