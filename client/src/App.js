@@ -53,7 +53,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className="container">
+        <div className="container w-25">
           <Switch>
             <Route
               exact

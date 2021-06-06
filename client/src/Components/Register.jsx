@@ -82,10 +82,13 @@ const Register = ({ setAuth }) => {
           onChange={onInputChange}
         />
 
-        <button className="btn btn-success btn-block">Register</button>
+        <div className="buttons d-flex flex-column">
+          <button className="btn btn-success btn-block">Register</button>
+          <Link className="my-3" to="/login">
+            Log in
+          </Link>
+        </div>
       </form>
-
-      <Link to="/login">Log in</Link>
     </>
   );
 };
