@@ -5,11 +5,17 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { increment, decrement, reset } from '../slices/counter/counterSlice';
 
+// Components
+import UsersTable from './UsersTable';
+
 const Dashboard = ({ setAuth }) => {
+  // States
   const [user, setUser] = useState({
     name: '',
     email: '',
   });
+  const [users, setUsers] = useState([]);
+
   // Redux
   const count = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
@@ -24,6 +30,9 @@ const Dashboard = ({ setAuth }) => {
     toast.info('Logged out successfully');
   };
 
+  /**
+   * Asynchronous function that gets the user's name based on their jwt
+   */
   const getName = async () => {
     try {
       const response = await fetch('http://localhost:5000/dashboard/', {
@@ -44,8 +53,25 @@ const Dashboard = ({ setAuth }) => {
     }
   };
 
+  const getUsers = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/users');
+
+      const json = await response.json();
+
+      setUsers(json);
+    } catch (error) {
+      console.error(error.message);
+      toast.error(error.message);
+    }
+  };
+
+  /**
+   * Runs the functions on load/init
+   */
   useEffect(() => {
     getName();
+    getUsers();
   }, []);
 
   return (
