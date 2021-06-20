@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Types
 type UserType = {
   user_name: string;

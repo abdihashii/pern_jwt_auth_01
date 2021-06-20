@@ -47,7 +47,6 @@ const Register = ({ setAuth }) => {
         dispatch(resetInputs({ auth: 'register' }));
       }
     } catch (error) {
-      console.error(error.message);
       setAuth(false);
       toast.error(error.message);
     }

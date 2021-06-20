@@ -46,7 +46,6 @@ const Dashboard = ({ setAuth }) => {
 
       setUser({ name, email });
     } catch (error) {
-      console.error(error.message);
       toast.error(error.message);
     }
   };
@@ -59,7 +58,6 @@ const Dashboard = ({ setAuth }) => {
 
       setUsers(json);
     } catch (error) {
-      console.error(error.message);
       toast.error(error.message);
     }
   };
