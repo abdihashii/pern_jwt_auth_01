@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 // Libraries
 import { toast } from 'react-toastify';
-import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement, reset } from '../slices/counter/counterSlice';
 
 // Components
+import IncrementButtons from './IncrementButtons';
 import UsersTable from './UsersTable';
 
 // Styling
@@ -18,10 +17,6 @@ const Dashboard = ({ setAuth }) => {
     email: '',
   });
   const [users, setUsers] = useState([]);
-
-  // Redux
-  const count = useSelector((state) => state.counter.value);
-  const dispatch = useDispatch();
 
   const onLogOut = (e) => {
     e.preventDefault();
@@ -83,30 +78,7 @@ const Dashboard = ({ setAuth }) => {
       <div className="my-3">Hello, {user.name}</div>
 
       <div className="my-3" style={{ width: '300px' }}>
-        <div className="main-buttons">
-          <button
-            className="btn btn-outline-success"
-            aria-label="Increment value"
-            onClick={() => dispatch(increment())}
-          >
-            Increment
-          </button>
-          <span className="mx-3 align-self-center">{count}</span>
-          <button
-            className="btn btn-outline-danger"
-            aria-label="Increment value"
-            onClick={() => dispatch(decrement())}
-          >
-            Decrement
-          </button>
-        </div>
-        <button
-          className="btn btn-outline-primary d-block w-100 my-3"
-          aria-label="Reset value"
-          onClick={() => dispatch(reset())}
-        >
-          Reset
-        </button>
+        <IncrementButtons />
       </div>
 
       <div className="my-3">
