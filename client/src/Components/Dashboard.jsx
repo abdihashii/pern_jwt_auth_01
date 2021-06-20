@@ -8,6 +8,9 @@ import { increment, decrement, reset } from '../slices/counter/counterSlice';
 // Components
 import UsersTable from './UsersTable';
 
+// Styling
+import './styles/dashboard.scss';
+
 const Dashboard = ({ setAuth }) => {
   // States
   const [user, setUser] = useState({
@@ -79,22 +82,24 @@ const Dashboard = ({ setAuth }) => {
       <h1 className="my-3">Dashboard</h1>
       <div className="my-3">Hello, {user.name}</div>
 
-      <div className="my-3" style={{ width: 'max-content' }}>
-        <button
-          className="btn btn-outline-success"
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          Increment
-        </button>
-        <span className="mx-3">{count}</span>
-        <button
-          className="btn btn-outline-danger"
-          aria-label="Increment value"
-          onClick={() => dispatch(decrement())}
-        >
-          Decrement
-        </button>
+      <div className="my-3" style={{ width: '300px' }}>
+        <div className="main-buttons">
+          <button
+            className="btn btn-outline-success"
+            aria-label="Increment value"
+            onClick={() => dispatch(increment())}
+          >
+            Increment
+          </button>
+          <span className="mx-3 align-self-center">{count}</span>
+          <button
+            className="btn btn-outline-danger"
+            aria-label="Increment value"
+            onClick={() => dispatch(decrement())}
+          >
+            Decrement
+          </button>
+        </div>
         <button
           className="btn btn-outline-primary d-block w-100 my-3"
           aria-label="Reset value"
