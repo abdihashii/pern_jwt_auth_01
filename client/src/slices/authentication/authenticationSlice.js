@@ -23,7 +23,6 @@ export const authenticationSlice = createSlice({
       const { auth } = action.payload;
 
       for (const key of Object.keys(state[auth])) {
-        debugger;
         state[auth][key] = '';
       }
     },
