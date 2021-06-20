@@ -10,7 +10,12 @@ import UsersTable from './UsersTable';
 // Styling
 import './styles/dashboard.scss';
 
-const Dashboard = ({ setAuth }) => {
+// Types
+type DashboardProps = {
+  setAuth(authBoolean: boolean): React.SetStateAction<boolean>;
+};
+
+const Dashboard = ({ setAuth }: DashboardProps) => {
   // States
   const [user, setUser] = useState({
     name: '',
@@ -18,7 +23,7 @@ const Dashboard = ({ setAuth }) => {
   });
   const [users, setUsers] = useState([]);
 
-  const onLogOut = (e) => {
+  const onLogOut = (e: React.FormEvent) => {
     e.preventDefault();
 
     localStorage.removeItem('token');

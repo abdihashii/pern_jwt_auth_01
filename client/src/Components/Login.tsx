@@ -8,11 +8,17 @@ import {
   changeInput,
   resetInputs,
 } from '../slices/authentication/authenticationSlice';
+import { RootState } from '../app/store';
 
-const Login = ({ setAuth }) => {
+// Types
+type LoginProps = {
+  setAuth(authBoolean: boolean): React.SetStateAction<boolean>;
+};
+
+const Login = ({ setAuth }: LoginProps) => {
   // Redux
   const loginAuthenticationInputs = useSelector(
-    (state) => state.authenticationInputs.login
+    (state: RootState) => state.authenticationInputs.login
   );
   const dispatch = useDispatch();
 
@@ -20,7 +26,7 @@ const Login = ({ setAuth }) => {
    * On click handler that runs the register API
    * @param {Object} e - The event target
    */
-  const onLogIn = async (e) => {
+  const onLogIn = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
